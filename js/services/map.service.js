@@ -19,10 +19,14 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 zoom: 15
             })
             console.log('Map!', gMap);
+            gMap.addListener("click", (e) => {
+            console.log(e.latLng.toJSON())
+            panTo(e.latLng.toJSON());
+            })
         })
 }
 
-function addMarker(loc) {
+function addMarker() {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
@@ -31,12 +35,13 @@ function addMarker(loc) {
     return marker;
 }
 
-function panTo(lat, lng) {
+function panTo({lat, lng}) {
     var laLatLng = new google.maps.LatLng(lat, lng);
+    console.log('laLatLng',laLatLng)
     gMap.panTo(laLatLng);
+    //add to saved loaction
+
 }
-
-
 
 
 function _connectGoogleApi() {
