@@ -8,7 +8,7 @@ window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onRenderLocation= onRenderLocation
 window.onDeleteLoc = onDeleteLoc
-
+window.onSearch = onSearch;
 
 function onInit() {
     mapService.initMap()
@@ -42,7 +42,9 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
-            console.log('User position is:', pos.coords);
+            console.log('User position is:', pos.coords.latitude);
+            let lat = pos.coords.latitude
+            let lng = pos.coords.longitude
             document.querySelector('.user-pos').innerText =
                 `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
                 onPanTo(pos.coords.latitude,pos.coords.longitude)
@@ -56,7 +58,7 @@ function onGetUserPos() {
 }
 function onPanTo(lat, lng) {
     console.log('Panning the Map', lat,lng);
-    mapService.panTo({lat, lng}); // noga note - need to change to make mon stati
+    mapService.panTo({lat, lng}); 
 }
 
 function onDeleteLoc(id) {
@@ -75,4 +77,10 @@ function onRenderLocation(loactions) {
     newHtml.push('</ul></div>')
     newHtml.unshift(`<div class="location"><h3>My Locations</h3><ul>`)
     elLocsList.innerHTML = newHtml.join(' ')
+    
+}
+
+function onSearch(){
+    const elInputSearch = document.querySelector('input[name=search]');
+    mapService.locationByName(elInputSearch.value)
 }

@@ -1,6 +1,4 @@
-// import { appController } from '../app.controller.js'
-// const renderLocation = appController.onRenderLocation
-
+import { storageService } from './storage-service.js'
 
 export const locService = {
     getLocs,
@@ -8,12 +6,17 @@ export const locService = {
     deleteLoc
 }
 
+const STORAGE_KEY = 'locations'
 
-const locs = [
+// const locs = [
+//     { name: 'Greatplace', lat: 32.047104, lng: 34.832384, id:101 }, 
+//     { name: 'Neveragain', lat: 32.047201, lng: 34.832581, id:102}
+// ]
+const locs = storageService.loadFromStorage(STORAGE_KEY) || [
     { name: 'Greatplace', lat: 32.047104, lng: 34.832384, id:101 }, 
-    { name: 'Neveragain', lat: 32.047201, lng: 34.832581, id:102}
-]
+    { name: 'Neveragain', lat: 32.047201, lng: 34.832581, id:102}]
 
+console.log('locs',locs)
 function getLocs() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -24,6 +27,12 @@ function getLocs() {
 
 function addLocs(loc){
     locs.push(loc)
+    storageService.saveToStorage(STORAGE_KEY, locs)
+}
+
+function addLocs(loc){
+    locs.push(loc)
+    storageService.saveToStorage(STORAGE_KEY, locs)
     onRenderLocation(locs)
 }
 

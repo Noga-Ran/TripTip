@@ -1,5 +1,5 @@
 //AIzaSyBAGrneJg_3nVxueyTP5LHJcvP_CiFg9xU
-
+import { storageService } from './storage-service.js'
 import { locService } from './loc.service.js'
 const onAddLocs = locService.addLocs
 
@@ -7,7 +7,9 @@ const onAddLocs = locService.addLocs
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    locationByName,
+    findLocationName
 }
 
 var gMap;
@@ -28,6 +30,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             panTo(e.latLng.toJSON());
                 // console.log(e.latLng.toJSON());
                 findLocationName(e.latLng.toJSON())
+                console.log('e.latLng',e.latLng)
                 panTo(e.latLng);
             })
         })
@@ -71,7 +74,9 @@ function findLocationName({lat,lng}) {
     const API_KEY = 'AIzaSyA2AxIb85Vl7Ms8mi7l3iE4njCWjR9nkCQ'; //Done: Enter your API Key
     const latLan=lat+', '+lng
     const prm = fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLan}&sensor=true&key=${API_KEY}`).then(res => res.json())
+    console.log('prm',prm)
     prm.then(createLocObj)
+    // return prm.results[0].formatted_address
 }
 
 // function printLoc(location){
@@ -79,11 +84,18 @@ function findLocationName({lat,lng}) {
 //     // saveLocation(location.results[0].formatted_address,location.results[0].id)
 // }
 
-locationByName('israel')
 function locationByName(name){
+    const termVideosMap = storageService.loadFromStorage(name) || {}
+    if (termVideosMap[name]){
+        panTo(termVideosMap[name])
+        return
+    }
     const API_KEY = 'AIzaSyA2AxIb85Vl7Ms8mi7l3iE4njCWjR9nkCQ'
-    const prm = fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=${API_KEY}`).then(res => console.log('res',res.json()))
+    const prm = fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=${API_KEY}`)
+    .then(res => res.json())
+    prm.then(createLocObj)
 }
+
 function createLocObj(location){
     // console.log(location.results[0].formatted_address,'\n',location.results[0].place_id,'\n',location.results[0].geometry.location);
     var loaction = {
@@ -92,5 +104,8 @@ function createLocObj(location){
         lat: location.results[0].geometry.location.lat,
         lng: location.results[0].geometry.location.lng,
     }
+
+    console.log(loaction);
     onAddLocs(loaction)
+    panTo(loaction)
 }

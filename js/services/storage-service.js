@@ -1,7 +1,10 @@
-'use strict';
+export const storageService = {
+  saveToStorage,
+  loadFromStorage
+}
 
-const STORAGE_KEY = 'videos'
-const WIKI_KEY = 'wiki'
+// const STORAGE_KEY = 'locations'
+// const WIKI_KEY = 'wiki'
 
 function saveToStorage(key, val) {
   localStorage.setItem(key, JSON.stringify(val));
