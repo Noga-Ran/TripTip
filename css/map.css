@@ -1,0 +1,26 @@
+body{
+    background-color: rgb(125, 164, 165);
+}
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search{
+    background-color:gray;
+    color:white;
+    border: 1px solid black;
+}
+
+input{
+    background-color: rgb(176, 176, 176);
+    border: 1px solid black;
+}
+
+.my-location{
+    background-color:gray;
+    color:white;
+    border: 1px solid black;
+}

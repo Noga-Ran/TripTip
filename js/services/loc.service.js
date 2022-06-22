@@ -1,13 +1,13 @@
+import { storageService } from './storage-service.js'
+
 export const locService = {
     getLocs,
     addLocs
 }
 
+const STORAGE_KEY = 'locations'
 
-const locs = [
-    { name: 'Greatplace', lat: 32.047104, lng: 34.832384 }, 
-    { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
-]
+const locs = storageService.loadFromStorage(STORAGE_KEY)
 
 console.log('locs',locs)
 function getLocs() {
@@ -20,6 +20,5 @@ function getLocs() {
 
 function addLocs(loc){
     locs.push(loc)
-    console.log('example')
-    console.log('locs',locs)
+    storageService.saveToStorage(STORAGE_KEY, locs)
 }

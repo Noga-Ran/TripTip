@@ -6,6 +6,7 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onSearch = onSearch;
 
 function onInit() {
     mapService.initMap()
@@ -39,15 +40,26 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
-            console.log('User position is:', pos.coords);
+            console.log('User position is:', pos.coords.latitude);
+            let lat = pos.coords.latitude
+            let lng = pos.coords.longitude
             document.querySelector('.user-pos').innerText =
-                `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+                `Latitude: ${lat} - Longitude: ${lng}`
+                mapService.panTo( {lat, lng} )
+                // console.log('findLocationName({lat, lng})',mapService.findLocationName({lat, lng}))
+                // document.querySelector('.location').innerText = findLocationName({lat, lng})
         })
         .catch(err => {
             console.log('err!!!', err);
         })
+    
 }
 function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917); // noga note - need to change to make mon stati
+}
+
+function onSearch(){
+    const elInputSearch = document.querySelector('input[name=search]');
+    mapService.locationByName(elInputSearch.value)
 }
