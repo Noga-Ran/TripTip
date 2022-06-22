@@ -78,6 +78,6 @@ function createLocObj(location){
         lng: location.results[0].geometry.location.lng,
     }
 
-    console.log(loaction);
+    // console.log(loaction);
     onAddLocs(loaction)
 }
