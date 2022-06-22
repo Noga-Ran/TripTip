@@ -28,11 +28,6 @@ function getLocs() {
 function addLocs(loc){
     locs.push(loc)
     storageService.saveToStorage(STORAGE_KEY, locs)
-}
-
-function addLocs(loc){
-    locs.push(loc)
-    storageService.saveToStorage(STORAGE_KEY, locs)
     onRenderLocation(locs)
 }
 
