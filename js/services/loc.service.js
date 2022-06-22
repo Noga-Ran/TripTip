@@ -19,4 +19,5 @@ function getLocs() {
 
 function addLocs(loc){
     locs.push(loc)
+    //renderLocation(locs)
 }
