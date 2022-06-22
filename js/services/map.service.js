@@ -71,6 +71,7 @@ function findLocationName({lat,lng}) {
     const API_KEY = 'AIzaSyA2AxIb85Vl7Ms8mi7l3iE4njCWjR9nkCQ'; //Done: Enter your API Key
     const latLan=lat+', '+lng
     const prm = fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLan}&sensor=true&key=${API_KEY}`).then(res => res.json())
+    console.log('prm',prm)
     prm.then(createLocObj)
 }
 
@@ -79,11 +80,15 @@ function findLocationName({lat,lng}) {
 //     // saveLocation(location.results[0].formatted_address,location.results[0].id)
 // }
 
-locationByName('israel')
+var res = locationByName('israel')
+console.log('res',res)
 function locationByName(name){
     const API_KEY = 'AIzaSyA2AxIb85Vl7Ms8mi7l3iE4njCWjR9nkCQ'
-    const prm = fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=${API_KEY}`).then(res => console.log('res',res.json()))
+    const prm = fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=${API_KEY}`)
+    .then(res => res.json())
+    prm.then(createLocObj)
 }
+
 function createLocObj(location){
     // console.log(location.results[0].formatted_address,'\n',location.results[0].place_id,'\n',location.results[0].geometry.location);
     var loaction = {
@@ -93,6 +98,6 @@ function createLocObj(location){
         lng: location.results[0].geometry.location.lng,
     }
 
-    // console.log(loaction);
+    console.log(loaction);
     onAddLocs(loaction)
 }

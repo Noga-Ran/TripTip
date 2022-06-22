@@ -9,6 +9,7 @@ const locs = [
     { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
 ]
 
+console.log('locs',locs)
 function getLocs() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -19,4 +20,6 @@ function getLocs() {
 
 function addLocs(loc){
     locs.push(loc)
+    console.log('example')
+    console.log('locs',locs)
 }
