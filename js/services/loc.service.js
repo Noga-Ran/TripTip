@@ -3,7 +3,8 @@ import { storageService } from './storage-service.js'
 export const locService = {
     getLocs,
     addLocs,
-    deleteLoc
+    deleteLoc,
+    renderLocs,
 }
 
 const STORAGE_KEY = 'locations'
@@ -37,6 +38,10 @@ function deleteLoc(locId){
     });
 
     locs.splice(index, 1)
+    storageService.saveToStorage(STORAGE_KEY, locs)
+    onRenderLocation(locs)
+}
 
+function renderLocs() {
     onRenderLocation(locs)
 }
