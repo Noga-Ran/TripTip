@@ -74,10 +74,11 @@ function findLocationName({lat,lng}) {
     prm.then(createLocObj)
 }
 
-function printLoc(location){
-    console.log(location.results[0].formatted_address,'\n',location.results[0].place_id,'\n',location.results[0].geometry.location);
-    // saveLocation(location.results[0].formatted_address,location.results[0].id)
-}
+// function printLoc(location){
+//     console.log(location.results[0].formatted_address,'\n',location.results[0].place_id,'\n',location.results[0].geometry.location);
+//     // saveLocation(location.results[0].formatted_address,location.results[0].id)
+// }
+
 locationByName('israel')
 function locationByName(name){
     const API_KEY = 'AIzaSyA2AxIb85Vl7Ms8mi7l3iE4njCWjR9nkCQ'
