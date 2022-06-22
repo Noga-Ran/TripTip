@@ -33,11 +33,11 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         })
 }
 
-function addMarker() {
+function addMarker(lat, lng) {
     var marker = new google.maps.Marker({
-        position: loc,
+        position: {lat,lng},
         map: gMap,
-        title: 'Hello World!'
+        title: 'My Location'
     });
     return marker;
 }

@@ -6,6 +6,9 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onRenderLocation= onRenderLocation
+window.onDeleteLoc = onDeleteLoc
+
 
 function onInit() {
     mapService.initMap()
@@ -23,9 +26,9 @@ function getPosition() {
     })
 }
 
-function onAddMarker() {
+function onAddMarker(lat= 32.0749831, lng= 34.9120554) {
     console.log('Adding a marker');
-    mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 }); //nogs note - need to change to make non stati
+    mapService.addMarker(lat, lng); //nogs note - need to change to make non stati
 }
 
 function onGetLocs() {
@@ -42,12 +45,34 @@ function onGetUserPos() {
             console.log('User position is:', pos.coords);
             document.querySelector('.user-pos').innerText =
                 `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+                onPanTo(pos.coords.latitude,pos.coords.longitude)
+                onAddMarker(pos.coords.latitude,pos.coords.longitude)
         })
         .catch(err => {
             console.log('err!!!', err);
         })
+
+
 }
-function onPanTo() {
-    console.log('Panning the Map');
-    mapService.panTo(35.6895, 139.6917); // noga note - need to change to make mon stati
+function onPanTo(lat, lng) {
+    console.log('Panning the Map', lat,lng);
+    mapService.panTo({lat, lng}); // noga note - need to change to make mon stati
+}
+
+function onDeleteLoc(id) {
+    locService.deleteLoc(id)
+}
+
+function onRenderLocation(loactions) {
+    var elLocsList = document.querySelector('.loactions-container')
+    var newHtml = loactions.map(loc => {
+        return `<div>
+        <li>${loc.name}</li>
+        <button onClick=onPanTo(${loc.lat},${loc.lng})>Go</button>
+        <button onClick=onDeleteLoc('${loc.id}')>Delete</button>
+        </div>`
+    })
+    newHtml.push('</ul></div>')
+    newHtml.unshift(`<div class="location"><h3>My Locations</h3><ul>`)
+    elLocsList.innerHTML = newHtml.join(' ')
 }
